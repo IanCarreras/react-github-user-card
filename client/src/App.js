@@ -1,6 +1,9 @@
 import React from 'react'
 import axios from 'axios'
 
+import UserCard from './components/UserCard'
+import FollowersList from './components/FollowersList'
+
 import './App.css'
 
 class App extends React.Component {
@@ -17,7 +20,7 @@ class App extends React.Component {
 
     axios.get('https://api.github.com/users/iancarreras/followers')
       .then(res => {
-        this.setState({...this.state, followers: res.data})
+        return this.setState({...this.state, followers: res.data})
       })
       .catch(err => {
         return err.response
@@ -25,10 +28,12 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.state)
+    const {userData, followers} = this.state
     return (
       <div className="App">
-        User Card
+        <UserCard userData={userData} />
+        <h2>Followers</h2>
+        <FollowersList followers={followers} />
       </div>
     )
   }
